@@ -40,7 +40,12 @@ class MyDataFrame:
        """
         # print(self.columns.index("c"))
         column_indices = [self.columns.index(column) for column in column_names]
-        return MyDataFrame ([[row[index] for index in column_indices] for row in self.data],column_names)
+        return ([[row[index] for row in self.data] for index in column_indices])
+      
+              
+        
+     
+  
   
   def index(self, index):
    """
