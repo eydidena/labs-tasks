@@ -27,7 +27,7 @@ params={
 response = requests.get(url, params=params)
 # print(response.__dict__)
 data = response.json()
-# print(data)
+print(data)
 # Check if the request was successful
 if response.status_code == 200:
   
