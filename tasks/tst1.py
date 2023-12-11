@@ -28,35 +28,7 @@ class MyDataFrame:
         result += f'{" ".join(map(str, row)):8}\n'
    
        return result
-     
-    
-  def slice_columns(self, column_names):
-        """
-        Slice the DataFrame based on column names.
-        Parameters:
-           column_names (list): The column names to include in the new DataFrame.
-        Returns:
-           MyDataFrame: A new DataFrame that only includes the specified columns.
-       """
-        # print(self.columns.index("c"))
-        column_indices = []
-        for column in column_names:
-            column_indices.append(self.columns.index(column))
-        if (len(column_indices)) == 1:
-        # column_indices = [self.columns.index(column) for column in column_names]
-        # print(column_indices)
-            # return ([[row[index] for row in self.data] for index in column_indices])
-            return ([row[index] for index in column_indices for row in self.data])
-        else:
-            return ([[row[index] for row in self.data] for index in column_indices])
-
-            
-      
-              
-        
-     
-  
-  
+                 
   def index(self, index):
    """
    Access a row in the DataFrame by its index.
@@ -67,7 +39,18 @@ class MyDataFrame:
    """
    return list(self.data[index])
   
-  def sort_by_column(self, column_name, reverse=False):
+
+  def __getattr__(self, column_names):
+        
+        column_indices = []
+        for column in column_names:
+            column_indices.append(self.columns.index(column))
+      
+        return ([row[index] for index in column_indices for row in self.data])
+ 
+    
+  
+  def sort(self, column_name, reverse=False):
       """
       Sort the DataFrame by a specific column.
       Parameters:
@@ -76,9 +59,17 @@ class MyDataFrame:
       """
       # Get the index of the column
       column_index = self.columns.index(column_name)
-
-      # Sort the data by the specified column
+    
+    # Sort the data by the specified column
       return self.data.sort(key=lambda row: row[column_index] if row[column_index]is not None else float('inf'), reverse=reverse)
+  
+
+  def __getitem__(self, column_names):
+        column_indices = []
+        for column in column_names:
+            column_indices.append(self.columns.index(column))
+        return ([[row[index] for row in self.data] for index in column_indices])
+  
   
 # # Initialize data to lists. 
 data = [(1, 2, 3), 
@@ -90,30 +81,18 @@ columns = ['a', 'b', "c"]
 df = MyDataFrame(data, columns)
 # Print the DataFrame
 print(df)
-# print(df.display)
-df_sliced_1 =df.slice_columns("a")
-df_sliced_2 = df.slice_columns(['a','c'])
-print(df_sliced_1)
+print(df.a)
 print("********")
-print(df_sliced_2)
-print('*********')
-print(df)
+
+# print('*********')
+# print(df)
 print(df.index(1))
 
 print("**********")
 
-df.sort_by_column('b')
+print(df[["a","c"]])
+
+print("**********")
+
+df.sort('b')
 print(df)
-
-
-# def handle_none(t):
-#     out = tuple()
-#     for i in t:
-#         try:
-#             out += (float(i),)
-#         except TypeError:
-#             out += (-float('inf'),) 
-#     return out
-
-
-
