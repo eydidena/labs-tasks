@@ -75,14 +75,10 @@ class MyDataFrame:
           reverse (bool): Whether to sort in descending order.
       """
       # Get the index of the column
-    #   column_index = self.columns.index(column_name)
+      column_index = self.columns.index(column_name)
 
-  
-    # #    if row[column_index] is None:
-    # #        row[column_index] = -float('inf')
-
-    #   # Sort the data by the specified column
-    #   return self.data.sort(key=lambda row: row[column_index], reverse=reverse)
+      # Sort the data by the specified column
+      return self.data.sort(key=lambda row: row[column_index] if row[column_index]is not None else float('inf'), reverse=reverse)
   
 # # Initialize data to lists. 
 data = [(1, 2, 3), 
@@ -96,15 +92,28 @@ df = MyDataFrame(data, columns)
 print(df)
 # print(df.display)
 df_sliced_1 =df.slice_columns("a")
-df_sliced_2 = df.slice_columns(['a', 'c'])
+df_sliced_2 = df.slice_columns(['a','c'])
 print(df_sliced_1)
 print("********")
 print(df_sliced_2)
 print('*********')
 print(df)
 print(df.index(1))
+
 print("**********")
+
 df.sort_by_column('b')
 print(df)
+
+
+# def handle_none(t):
+#     out = tuple()
+#     for i in t:
+#         try:
+#             out += (float(i),)
+#         except TypeError:
+#             out += (-float('inf'),) 
+#     return out
+
 
 
