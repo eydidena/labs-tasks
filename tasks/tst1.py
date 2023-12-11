@@ -39,8 +39,18 @@ class MyDataFrame:
            MyDataFrame: A new DataFrame that only includes the specified columns.
        """
         # print(self.columns.index("c"))
-        column_indices = [self.columns.index(column) for column in column_names]
-        return ([[row[index] for row in self.data] for index in column_indices])
+        column_indices = []
+        for column in column_names:
+            column_indices.append(self.columns.index(column))
+        if (len(column_indices)) == 1:
+        # column_indices = [self.columns.index(column) for column in column_names]
+        # print(column_indices)
+            # return ([[row[index] for row in self.data] for index in column_indices])
+            return ([row[index] for index in column_indices for row in self.data])
+        else:
+            return ([[row[index] for row in self.data] for index in column_indices])
+
+            
       
               
         
@@ -85,7 +95,7 @@ df = MyDataFrame(data, columns)
 # Print the DataFrame
 print(df)
 # print(df.display)
-df_sliced_1 =df.slice_columns(["a"])
+df_sliced_1 =df.slice_columns("a")
 df_sliced_2 = df.slice_columns(['a', 'c'])
 print(df_sliced_1)
 print("********")
@@ -96,6 +106,5 @@ print(df.index(1))
 print("**********")
 df.sort_by_column('b')
 print(df)
-
 
 
